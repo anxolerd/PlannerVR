@@ -7,60 +7,85 @@ import {
   View,
   VrHeadModel,
 } from 'react-vr';
+import Storage from './storage';
 
 
 const DEG_IN_RAD = 57.2958;
+const storage = new Storage();
 
 export default class PlannerVR extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      rot: [0,0,0],
-      distance: -3,
-    };
+    storage.addModel({
+        source: { obj: asset('dchair_obj.obj') },
+        layoutOrigin: [0.5, 0.5],
+        wireframe: true,
+        style: {
+          transform: [
+            { rotateY: 0 },
+            { rotateX: 0 },
+            { translate: [0, -1, -3]},
+            { scale: 0.05 },
+            { rotateX: 0 },
+            { rotateY: 0 },
+          ]
+        },
+    });
+    this.state = { storage };
   }
 
   handleInput = (evt) => {
+    const [radX, radY, radZ] = VrHeadModel.rotationOfHeadMatrix();
+
     const inputEvent = evt.nativeEvent.inputEvent;
-    console.log(inputEvent);
+    let storage = this.state.storage.clone();
+
+    let currentModel = storage.currentModel;
+
+    currentModel.style.transform[0].rotateY = radY * DEG_IN_RAD;
+    currentModel.style.transform[1].rotateX = radX * DEG_IN_RAD;
+    currentModel.style.transform[4].rotateX = -radX * DEG_IN_RAD;
+
+
     if (inputEvent.eventType === 'keyup') {
       if (inputEvent.code === 'KeyZ') {
-        this.setState({ 
-          distance: this.state.distance - 1,
-        });
+        currentModel.style.transform[2].translate[2] -= 1;
       }
       if (inputEvent.code === 'KeyA') {
-        this.setState({ 
-          distance: this.state.distance + 1,
-        });
+          currentModel.style.transform[2].translate[2] += 1;
+      }
+      if (inputEvent.code === 'KeyQ') {
+          currentModel.style.transform[5].rotateY += 3;
+      }
+      if (inputEvent.code === 'KeyE') {
+          currentModel.style.transform[5].rotateY -= 3;
+      }
+      if (inputEvent.code === 'KeyN') {
+          storage.addModel({
+              source: { obj: asset('dchair_obj.obj') },
+              layoutOrigin: [0.5, 0.5],
+              wireframe: true,
+              style: {
+                  transform: [
+                      { rotateY: radY * DEG_IN_RAD },
+                      { rotateX: radX * DEG_IN_RAD },
+                      { translate: [0, -1, -3]},
+                      { scale: 0.05 },
+                      { rotateX: -radX * DEG_IN_RAD },
+                      { rotateY: 0 },
+                  ]
+              },
+          })
       }
     }
-    const position = VrHeadModel.positionOfHeadMatrix();
-    const rotation = VrHeadModel.rotationOfHeadMatrix();
-    const horizFov = VrHeadModel.horizontalFov();
-    const vertFov = VrHeadModel.verticalFov();
-    this.setState({rot: rotation});
-  }
+    this.setState({ storage });
+  };
 
   render() {
     return (
       <View onInput={ this.handleInput }>
         <Pano source={asset('house-of-scientists.jpg')}/>
-        <Model
-          source={{
-            obj: asset('dchair_obj.obj'),
-          }}
-          style={{
-            layoutOrigin: [0.5, 0.5],
-            transform: [
-              { rotateY: this.state.rot[1] * DEG_IN_RAD, },
-              { rotateX: this.state.rot[0] * DEG_IN_RAD, },
-              { translate: [0, -1, this.state.distance]},
-              { scale: 0.05 },
-              { rotateX: -this.state.rot[0] * DEG_IN_RAD, },
-            ],
-          }}
-        />
+        {this.state.storage.models.map((props) => <Model { ...props }/>)}
       </View>
     );
   }
