@@ -1,0 +1,26 @@
+language: node_js
+node_js: 6
+
+install: npm install
+script: |
+  if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
+    if [ -n "$GH_TOKEN" ]; then
+      cd "$TRAVIS_BUILD_DIR"
+      npm run bundle
+      cp vr/index.html vr/build/index.html
+      cp -r static_assets vr/build/static_assets
+      cd vr/build
+      sed -i 's/client.bundle/client.bundle.js/g' index.html
+      sed -i 's/index.vr.bundle/index.bundle.js/g' index.html
+      git init
+      git checkout -b gh-pages
+      git add .
+      git -c user.name='Travis CI' \
+          -c user.email='travis'\
+          commit -m "Deploy $(date +'%F %H:%M:%S')"
+      git push -f -q \
+        https://$GH_TOKEN@github.com/anxolerd/PlannerVR.git \
+        gh-pages 2>/dev/null
+      cd "$TRAVIS_BUILD_DIR"
+    fi
+  fi
