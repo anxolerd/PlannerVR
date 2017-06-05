@@ -10,7 +10,7 @@ import ModelView from './ModelView';
 import * as actions from '../actions';
 
 class App extends React.Component {
-    propTypes = {
+    static propTypes = {
         onMove: React.PropTypes.func.isRequired,
         onRotateObj: React.PropTypes.func.isRequired,
         onRotateHead: React.PropTypes.func.isRequired,

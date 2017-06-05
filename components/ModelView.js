@@ -2,7 +2,7 @@ import React from 'react';
 import { Model } from 'react-vr';
 
 export default class ModelView extends React.Component {
-    propTypes = {
+    static propTypes = {
         onModelSelect: React.PropTypes.func.isRequired,
         source: React.PropTypes.object.isRequired,
         layoutOrigin: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
