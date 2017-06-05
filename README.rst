@@ -28,7 +28,7 @@ Use mouse to look around
 +=====+=========================+
 | N   | Create new object       |
 +-----+-------------------------+
-| A/Z | Move obj further/closer |
+| Z/A | Move obj further/closer |
 +-----+-------------------------+
 | Q/E | Rotate obj CCW/CW       |
 +-----+-------------------------+
