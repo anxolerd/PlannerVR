@@ -11,7 +11,7 @@ script: |
       cp -r static_assets vr/build/static_assets
       cd vr/build
       sed -i 's/client.bundle/client.bundle.js/g' index.html
-      sed -i 's/index.vr.bundle/index.bundle.js/g' index.html
+      sed -i 's!../index.vr.bundle!./index.bundle.js!g' index.html
       git init
       git checkout -b gh-pages
       git add .
