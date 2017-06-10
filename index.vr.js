@@ -1,10 +1,10 @@
 import React from 'react';
-import App from './components/App';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
-import plannerApp from './reducers';
 import { AppRegistry } from 'react-vr';
 
+import App from './application/components/App';
+import plannerApp from './application/reducers';
 
 let store = createStore(plannerApp);
 

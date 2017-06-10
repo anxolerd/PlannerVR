@@ -8,6 +8,7 @@ export default class ModelView extends React.Component {
         source: React.PropTypes.object.isRequired,
         layoutOrigin: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
         wireframe: React.PropTypes.bool,
+        isSelected: React.PropTypes.bool,
         transform: React.PropTypes.shape({
             baseRot: React.PropTypes.shape({
                 X: React.PropTypes.number.isRequired,
@@ -30,14 +31,15 @@ export default class ModelView extends React.Component {
     };
 
     render() {
-        const {source, layoutOrigin, wireframe, transform} = this.props;
+        const {transform} = this.props;
         return (
             <Model
                 onInput={this.handleInput}
-                source={ source }
-                layoutOrigin={ layoutOrigin }
-                wireframe={ wireframe }
+                source={ this.props.source }
+                layoutOrigin={ this.props.layoutOrigin }
+                wireframe={ this.props.wireframe }
                 style={{
+                    opacity: this.props.isSelected ? 0.5 : 1,
                     transform: [
                         {rotateY: transform.baseRot.Y},
                         {rotateX: transform.baseRot.X},

@@ -49,6 +49,7 @@ class App extends React.Component {
                 {this.props.models.map((model) => (
                     <ModelView
                         key={model.id}
+                        isSelected={model.id === this.props.currentModelId}
                         onModelSelect={this.props.onSelect}
                         onModelDelete={this.props.onDelete}
                         { ...model }
