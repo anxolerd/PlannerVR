@@ -31,7 +31,7 @@ const Menu = ({head, items}) => (
             transform: [
                 {rotateY: head.rot.Y},
                 {rotateX: head.rot.X},
-                {translateZ: -2},
+                {translateZ: -3},
             ]
         }}
     >

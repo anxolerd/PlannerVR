@@ -5,7 +5,34 @@ import { types as actions }  from '../actions';
 
 const modelDefinitions = {
     CHAIR: {
-        source: { obj: asset('dchair_obj.obj')},
+        source: { obj: asset('collection/chair/dchair_obj.obj')},
+        rotationY: 0,
+        scale: 0.05,
+        distance: -4,
+    },
+    BED: {
+        source: {
+            obj: asset('collection/bed/cama.obj'),
+            mtl: asset('collection/bed/cama.mtl'),
+        },
+        rotationY: 0,
+        scale: 0.1,
+        distance: -4,
+    },
+    BED_TABLE: {
+        source: {
+            obj: asset('collection/bed-table/bed-table.obj'),
+            mtl: asset('collection/bed-table/bed-table.mtl'),
+        },
+        rotationY: 0,
+        scale: 0.05,
+        distance: -4,
+    },
+    SOFA: {
+        source: {
+            obj: asset('collection/sofa/sofa1.obj'),
+            mtl: asset('collection/sofa/sofa1.mtl'),
+        },
         rotationY: 0,
         scale: 0.05,
         distance: -4,

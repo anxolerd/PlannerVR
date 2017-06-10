@@ -4,12 +4,17 @@ import {
     Pano,
     View,
     VrHeadModel,
+    PointLight,
 } from 'react-vr';
 
 import Menu from './Menu';
 import ObjectModel from "./ObjectModel";
 
 export default class Application extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {timer: null};
+    }
     _isKeyPressed = (event) => {
         return (
             (event.type === 'GamepadInputEvent' && event.button === 0 && event.eventType === 'keydown' && !event.repeat) ||
@@ -31,7 +36,10 @@ export default class Application extends React.Component {
             }
         } else if (
             event.nativeEvent.inputEvent.type === 'KeyboardInputEvent'
-            && event.nativeEvent.inputEvent.eventType === 'keypress'
+            && (
+                event.nativeEvent.inputEvent.eventType === 'keypress'
+                || event.nativeEvent.inputEvent.eventType === 'keyup'
+            )
         ) {
             switch (event.nativeEvent.inputEvent.code) {
                 case 'KeyA':
@@ -127,15 +135,17 @@ export default class Application extends React.Component {
                 args: [this.props.models.focusedModelId, this.props.head],
             });
         } else {
-            items.push({
-                caption: 'Add Chair',
-                action: (...args) => {
-                    this.props.actions.object.create(...args);
-                    this.props.actions.appUI.menu.hide();
-                },
-                color: 'red',
-                args: ['CHAIR', this.props.head],
-            });
+            for (let name of ['CHAIR', 'BED_TABLE', 'SOFA', 'BED']) {
+                items.push({
+                    caption: `Add ${name}`,
+                    action: (...args) => {
+                        this.props.actions.object.create(...args);
+                        this.props.actions.appUI.menu.hide();
+                    },
+                    color: 'green',
+                    args: [name, this.props.head],
+                });
+            }
         }
         items.push({
             caption: 'Cancel',
@@ -152,24 +162,25 @@ export default class Application extends React.Component {
         >
             <Pano source={asset('house-of-scientists.jpg')}/>
             <View>
-            {this.props.models.models.map(m => (
-                <ObjectModel
-                    {...m}
-                    appUI={this.props.appUI}
-                    actions={this.props.actions}
-                    head={this.props.head}
-                    key={m.id}
-                    isSelected={m.id === this.props.models.currentModelId}
-                />
-            ))}
+                <PointLight/>
+                {this.props.models.models.map(m => (
+                    <ObjectModel
+                        {...m}
+                        appUI={this.props.appUI}
+                        actions={this.props.actions}
+                        head={this.props.head}
+                        key={m.id}
+                        isSelected={m.id === this.props.models.currentModelId}
+                    />
+                ))}
             </View>
             <View>
-            {this.props.appUI.isMenuOpen
-                ? <Menu
-                    head={this.props.head}
-                    items={this.getMenuItems()}
-                />
-                : null}
+                {this.props.appUI.isMenuOpen
+                    ? <Menu
+                        head={this.props.head}
+                        items={this.getMenuItems()}
+                    />
+                    : null}
             </View>
         </View>
     )

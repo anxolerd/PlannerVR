@@ -42,6 +42,7 @@ export default class ObjectModel extends React.Component {
         >
             <Model
                 source={this.props.source}
+                lit={true}
                 layoutOrigin={[0.5, 0.5]}
                 style={{
                     opacity: this.props.isSelected ? 0.5 : 1
