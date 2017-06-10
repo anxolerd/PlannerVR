@@ -3,18 +3,25 @@ import { VrButton, Model } from 'react-vr';
 
 
 export default class ObjectModel extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { isHovered: false };
+    }
+
     render = () => (
         <VrButton
             onEnter={
                 () => {
                     if (this.props.appUI.isMenuOpen) return;
                     this.props.actions.object.focus(this.props.id);
+                    this.setState({isHovered: true});
                 }
             }
             onExit={
                 () => {
                     if (this.props.appUI.isMenuOpen) return;
                     this.props.actions.object.blur(this.props.id);
+                    this.setState({isHovered: false});
                 }
             }
             style={{
@@ -45,7 +52,10 @@ export default class ObjectModel extends React.Component {
                 lit={true}
                 layoutOrigin={[0.5, 0.5]}
                 style={{
-                    opacity: this.props.isSelected ? 0.5 : 1
+                    opacity: (
+                        this.props.isSelected ? 0.5
+                        : this.state.isHovered ? 0.7 : 1
+                    )
                 }}
         />
         </VrButton>

@@ -5,14 +5,31 @@ import { VrButton, Text, View } from 'react-vr';
 const DEG_IN_RAD = 57.2958;
 
 
-const MenuItem = (props) => (
-    <VrButton
-        onClick={props.onClick}
-        style={{ margin: 0.1, height: 0.3, backgroundColor: props.color}}
-    >
-        <Text style={{fontSize: 0.2, textAlign: 'center'}}>{props.caption}</Text>
-    </VrButton>
-);
+class MenuItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isHovered: false,
+        }
+    }
+
+    render = () => (
+        <VrButton
+            onClick={this.props.onClick}
+            onEnter={() => {this.setState({isHovered: true})}}
+            onExit={() => {this.setState({isHovered: false})}}
+            style={{
+                margin: 0.1,
+                height: 0.3,
+                backgroundColor: this.props.color,
+                borderColor: this.state.isHovered ? 'yellow' : null,
+                borderWidth: this.state.isHovered ? 0.005 : null,
+            }}
+        >
+            <Text style={{fontSize: 0.2, textAlign: 'center'}}>{this.props.caption}</Text>
+        </VrButton>
+    )
+}
 
 MenuItem.propTypes = {
     caption: React.PropTypes.string.isRequired,
