@@ -16,6 +16,7 @@ class App extends React.Component {
         onRotateHead: React.PropTypes.func.isRequired,
         onAddModel: React.PropTypes.func.isRequired,
         onSelect: React.PropTypes.func.isRequired,
+        onDelete: React.PropTypes.func.isRequired,
         models: React.PropTypes.array.isRequired,
         currentModelId: React.PropTypes.number.isRequired,
     };
@@ -49,6 +50,7 @@ class App extends React.Component {
                     <ModelView
                         key={model.id}
                         onModelSelect={this.props.onSelect}
+                        onModelDelete={this.props.onDelete}
                         { ...model }
                     />
                 ))}
@@ -66,6 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
     onRotateHead: (...args) => dispatch(actions.rotateHead(...args)),
     onAddModel: (...args) => dispatch(actions.addModel(...args)),
     onSelect: (...args) => dispatch(actions.select(...args)),
+    onDelete: (...args) => dispatch(actions.deleteObject(...args)),
 });
 
 export default connect(

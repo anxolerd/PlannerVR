@@ -4,6 +4,7 @@ import { Model } from 'react-vr';
 export default class ModelView extends React.Component {
     static propTypes = {
         onModelSelect: React.PropTypes.func.isRequired,
+        onModelDelete: React.PropTypes.func.isRequired,
         source: React.PropTypes.object.isRequired,
         layoutOrigin: React.PropTypes.arrayOf(React.PropTypes.number).isRequired,
         wireframe: React.PropTypes.bool,
@@ -20,10 +21,12 @@ export default class ModelView extends React.Component {
     };
 
     handleInput = ({nativeEvent: {inputEvent}}) => {
-        if (
-            inputEvent.eventType === 'keyup'
-            && inputEvent.code === 'KeyS'
-        ) { this.props.onModelSelect(this.props.id) }
+        if (inputEvent.eventType === 'keyup') {
+            switch (inputEvent.code) {
+                case 'KeyS': this.props.onModelSelect(this.props.id); break;
+                case 'KeyX': this.props.onModelDelete(this.props.id); break;
+            }
+        }
     };
 
     render() {

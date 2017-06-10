@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 import { asset } from 'react-vr';
 
+import { ACTION_TYPES } from './actions';
+
 const DEG_IN_RAD = 57.2958;
 
 const model = (state = {}, action) => {
     switch (action.type) {
-        case 'ADD_OBJ': {
+        case ACTION_TYPES.ADD_OBJECT: {
             switch (action.model) {
                 case 'CHAIR': {
                     return {
@@ -25,7 +27,7 @@ const model = (state = {}, action) => {
                 }
             }
         }
-        case 'HEAD_ROTATE': {
+        case ACTION_TYPES.ROTATE_HEAD: {
             if (state.id !== action.id) return state;
             return {
                 ...state,
@@ -39,7 +41,7 @@ const model = (state = {}, action) => {
                 }
             }
         }
-        case 'OBJ_ROTATE': {
+        case ACTION_TYPES.ROTATE_OBJECT: {
             if (state.id !== action.id) return state;
             const currentAngle = state.transform.objRotY;
             const degrees = action.direction === 'CW' ? -3 : 3;
@@ -51,7 +53,7 @@ const model = (state = {}, action) => {
                 }
             }
         }
-        case 'MOVE': {
+        case ACTION_TYPES.MOVE_OBJECT: {
             if (state.id !== action.id) return state;
             const currentDistance = state.transform.distance;
             const distance = action.direction === 'FROM' ? 1 : -1;
@@ -69,7 +71,7 @@ const model = (state = {}, action) => {
 
 const plannerApp = (state = {models: [], currentModelId: -1}, action) => {
     switch (action.type) {
-        case 'ADD_OBJ': {
+        case ACTION_TYPES.ADD_OBJECT: {
             const newObj = model(undefined, action);
             return {
                 models: [
@@ -79,7 +81,17 @@ const plannerApp = (state = {models: [], currentModelId: -1}, action) => {
                 currentModelId: newObj.id,
             }
         }
-        case 'SELECT': {
+        case ACTION_TYPES.DELETE_OBJECT: {
+            return {
+                models: state.models.filter((m) => m.id !== action.id),
+                currentModelId: (
+                    state.currentModelId === action.id
+                    ? -1
+                    : state.currentModelId
+                ),
+            }
+        }
+        case ACTION_TYPES.SELECT_OBJECT: {
             return {
                 models: state.models,
                 currentModelId: action.id,
