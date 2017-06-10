@@ -8,7 +8,6 @@ import plannerApp from './application/reducers';
 
 let store = createStore(plannerApp);
 
-
 export default PlannerVR = () => (
     <Provider store={store}>
         <Application />

@@ -5,6 +5,7 @@ import {
     View,
     VrHeadModel,
     PointLight,
+    NativeModules,
 } from 'react-vr';
 
 import Menu from './Menu';
@@ -13,8 +14,18 @@ import ObjectModel from "./ObjectModel";
 export default class Application extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {timer: null};
+        const Location = NativeModules.Location;
+        let bg = (new URL(Location.href)).searchParams.get('bg');
+        if (bg === null) {
+            bg = asset('house-of-scientists.jpg').uri;
+        }
+
+        this.state = {
+            timer: null,
+            bg,
+        };
     }
+
     _isKeyPressed = (event) => {
         return (
             (event.type === 'GamepadInputEvent' && event.button === 0 && event.eventType === 'keydown' && !event.repeat) ||
@@ -160,7 +171,7 @@ export default class Application extends React.Component {
         <View
             onInput={this.handleInput}
         >
-            <Pano source={asset('house-of-scientists.jpg')}/>
+            <Pano source={{uri: this.state.bg}}/>
             <View>
                 <PointLight/>
                 {this.props.models.models.map(m => (
