@@ -1,0 +1,45 @@
+containers:
+  planner-mongo:
+    setup:
+      - !Ubuntu xenial
+      - !AptTrust keys: [EA312927]
+      - !UbuntuRepo
+        url: http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2
+        suite: multiverse
+        components: []
+      - !Install
+        - mongodb-org=3.2.6
+        - mongodb-org-server=3.2.6
+        - mongodb-org-shell=3.2.6
+        - mongodb-org-mongos=3.2.6
+        - mongodb-org-tools=3.2.6
+      - !EnsureDir /data/db
+    volumes:
+      /data/db: !Persistent
+        name: mongo-storage
+#        init-command: _init_db
+  application:
+    setup:
+      - !Ubuntu xenial
+      - !UbuntuUniverse
+      - !Py3Requirements fileserver/requirements.txt
+      - !Py3Install [pip]
+      - !Install
+        - libmagic-dev
+    environ:
+      LANG: en_US.utf8
+
+commands:
+  run: !Supervise
+    description: Run this application
+    mode: stop-on-failure
+    children:
+      mongo: !Command
+        description: Run mongodb server
+        container: planner-mongo
+        run: mongod
+      python: !Command
+        container: application
+        run: |
+          cd /work/fileserver
+          FLASK_APP=__init__.py python3 -m flask run

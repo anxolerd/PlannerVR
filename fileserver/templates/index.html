@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Planner VR</title>
+</head>
+<body>
+    {% if images %}
+        {% for image in images %}
+            <a href="http://localhost:8081/vr/?bg=http://localhost:5000/img/{{image._id}}">
+                <img
+                    src="/img/{{image._id}}"
+                    width="200px"
+                    height="100px"
+                    alt="{{image.uploadDate.isoformat() }}"
+                    title="{{image.uploadDate.isoformat() }}"
+                />
+            </a>
+        {% endfor %}
+    {% else %}
+        <span>Nothing here yet</span>
+    {% endif %}
+    <hr />
+    <form method="POST" enctype="multipart/form-data">
+        <div>
+        <label for="image">Upload your pano</label><br />
+        <input name="image" id="image" type="file"/>
+        </div>
+        <div>
+        <input type="submit"/>
+        </div>
+    </form>
+</body>
+</html>
