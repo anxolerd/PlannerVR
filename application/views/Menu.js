@@ -20,7 +20,7 @@ class MenuItem extends React.Component {
             onExit={() => {this.setState({isHovered: false})}}
             style={{
                 margin: 0.1,
-                height: 0.3,
+                height: 0.4,
                 backgroundColor: this.props.color,
                 borderColor: this.state.isHovered ? 'yellow' : null,
                 borderWidth: this.state.isHovered ? 0.005 : null,
