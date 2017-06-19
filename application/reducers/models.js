@@ -8,7 +8,7 @@ const modelDefinitions = {
         source: { obj: asset('collection/chair/dchair_obj.obj')},
         rotationY: 0,
         scale: 0.05,
-        distance: -4,
+        distance: -5,
     },
     BED: {
         source: {
@@ -26,7 +26,7 @@ const modelDefinitions = {
         },
         rotationY: 0,
         scale: 0.05,
-        distance: -4,
+        distance: -6,
     },
     SOFA: {
         source: {
