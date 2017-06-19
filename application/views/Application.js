@@ -70,13 +70,20 @@ export default class Application extends React.Component {
                     this.props.actions.appUI.menu.hide();
                     break;
             }
-        } else {
-            const [X, Y, Z] = VrHeadModel.rotationOfHeadMatrix();
-            if (!this.props.appUI.isMenuOpen) {
-                this.props.actions.head.rotate({X, Y, Z});
-            }
+//        } else {
+//            const [X, Y, Z] = VrHeadModel.rotationOfHeadMatrix();
+//            if (!this.props.appUI.isMenuOpen) {
+//                this.props.actions.head.rotate({X, Y, Z});
+//            }
         }
     };
+
+    handleHeadPose = ({nativeEvent}) => {
+        const [X, Y, Z] = VrHeadModel.rotationOfHeadMatrix(nativeEvent.headMatrixArray);
+        if (!this.props.appUI.isMenuOpen) {
+            this.props.actions.head.rotate({X, Y, Z});
+        }
+    }
 
     getMenuItems = () => {
         let items = [];
@@ -170,6 +177,7 @@ export default class Application extends React.Component {
     render = () => (
         <View
             onInput={this.handleInput}
+            onHeadPose={this.handleHeadPose}
         >
             <Pano source={{uri: this.state.bg}}/>
             <View>
