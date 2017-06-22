@@ -17,6 +17,7 @@
     "react-vr": "^1.1.0",
     "react-vr-web": "^1.1.0",
     "redux": "^3.6.0",
+    "simple-raycaster": "^1.0.1",
     "three": "^0.80.1"
   },
   "devDependencies": {

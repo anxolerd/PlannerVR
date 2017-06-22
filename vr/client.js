@@ -4,10 +4,15 @@
 
 // Auto-generated content.
 import {VRInstance} from 'react-vr-web';
+import * as SimpleRaycaster from "simple-raycaster";
 
 function init(bundle, parent, options) {
   const vr = new VRInstance(bundle, 'PlannerVR', parent, {
     // Add custom options here
+    raycasters: [
+      SimpleRaycaster // Add SimpleRaycaster to the options
+    ],
+    cursorVisibility: 'visible',
     ...options,
   });
   vr.render = function() {

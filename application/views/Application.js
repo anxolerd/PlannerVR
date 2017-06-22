@@ -79,7 +79,7 @@ export default class Application extends React.Component {
     };
 
     handleHeadPose = ({nativeEvent}) => {
-        const [X, Y, Z] = VrHeadModel.rotationOfHeadMatrix(nativeEvent.headMatrixArray);
+        const [X, Y, Z] = VrHeadModel.yawPitchRoll();
         if (!this.props.appUI.isMenuOpen) {
             this.props.actions.head.rotate({X, Y, Z});
         }

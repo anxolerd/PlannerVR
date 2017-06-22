@@ -1,5 +1,5 @@
 import React from 'react';
-import { VrButton, Text, View } from 'react-vr';
+import { VrButton, Text, View, asset } from 'react-vr';
 
 
 const DEG_IN_RAD = 57.2958;

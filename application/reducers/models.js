@@ -145,7 +145,7 @@ export default reduce = (
             return {
                 models: state.models.map((m) => (
                    m.id === state.currentModelId
-                   ? rotateModel(m, 3)
+                   ? rotateModel(m, 5)
                    : m
                 )),
                 currentModelId: state.currentModelId,

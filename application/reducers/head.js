@@ -1,14 +1,9 @@
 import actionTypes  from '../actions/types';
-import { radToDeg } from '../util';
 
 
 const rotateHead = (state, {angles: {X, Y, Z}}) => ({
     ...state,
-    rot: {
-        X: radToDeg(X),
-        Y: radToDeg(Y),
-        Z: radToDeg(Z),
-    },
+    rot: { X, Y, Z },
 });
 
 
