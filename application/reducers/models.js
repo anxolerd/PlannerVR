@@ -5,18 +5,21 @@ import { types as actions }  from '../actions';
 
 const modelDefinitions = {
     CHAIR: {
-        source: { obj: asset('collection/chair/dchair_obj.obj')},
+        source: { 
+            obj: asset('collection/chair/plastic_chair.obj'),
+            mtl: asset('collection/chair/plastic_chair.mtl'),
+        },
         rotationY: 0,
-        scale: 0.05,
+        scale: 0.02,
         distance: -5,
     },
     BED: {
         source: {
-            obj: asset('collection/bed/cama.obj'),
-            mtl: asset('collection/bed/cama.mtl'),
+            obj: asset('collection/bed/bed1.obj'),
+            mtl: asset('collection/bed/bed1.mtl'),
         },
         rotationY: 0,
-        scale: 0.1,
+        scale: 1.0,
         distance: -4,
     },
     BED_TABLE: {
@@ -30,11 +33,11 @@ const modelDefinitions = {
     },
     SOFA: {
         source: {
-            obj: asset('collection/sofa/sofa1.obj'),
-            mtl: asset('collection/sofa/sofa1.mtl'),
+            obj: asset('collection/sofa/Leather_sofa.obj'),
+            mtl: asset('collection/sofa/Leather_sofa.mtl'),
         },
         rotationY: 0,
-        scale: 0.05,
+        scale: 1,
         distance: -4,
     }
 };
